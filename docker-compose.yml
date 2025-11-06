@@ -13,14 +13,14 @@ services:
       - SQS_QUEUE_NAME=${SQS_QUEUE_NAME}
       - AWS_REGION=${AWS_REGION}
     volumes:
-      - ./localstack-init:/etc/localstack/init/ready.d
+      - ./localstack/init/ready.d:/etc/localstack/init/ready.d
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - app-network
 
   api:
     build:
-      context: ./api
+      context: ./apps/api
       dockerfile: Dockerfile
     container_name: api
     ports:
@@ -28,41 +28,43 @@ services:
     environment:
       - NODE_ENV=development
       - AWS_ENDPOINT=http://localstack:4566
-      - AWS_REGION=us-east-1
+      - AWS_REGION=${AWS_REGION}
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - SQS_QUEUE_NAME=${SQS_QUEUE_NAME}
     env_file:
       - .env
     volumes:
-      - ./api/src:/app/src
+      - ./apps/api/src:/app/src
       - /app/node_modules
     depends_on:
       - localstack
     networks:
       - app-network
-    command: npm run dev
 
   worker:
     build:
-      context: ./worker
+      context: ./apps/worker
       dockerfile: Dockerfile
     container_name: worker
     environment:
       - NODE_ENV=development
       - AWS_ENDPOINT=http://localstack:4566
-      - AWS_REGION=us-east-1
+      - AWS_REGION=${AWS_REGION}
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - SQS_QUEUE_NAME=${SQS_QUEUE_NAME}
     env_file:
       - .env
     volumes:
-      - ./worker/src:/app/src
+      - ./apps/worker/src:/app/src
       - /app/node_modules
     depends_on:
       - localstack
     networks:
       - app-network
-    command: npm run dev
 
 networks:
   app-network:
