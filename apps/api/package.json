@@ -1,17 +1,17 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "description": "API service for node-arc-local-stack",
-  "main": "src/index.js",
+  "name": "@app/api",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "node src/index.js",
-    "start": "node src/index.js"
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.0.0",
     "@aws-sdk/client-sqs": "^3.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
   }
 }

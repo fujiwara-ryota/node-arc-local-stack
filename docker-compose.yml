@@ -23,6 +23,7 @@ services:
       context: ./apps/api
       dockerfile: Dockerfile
     container_name: api
+    command: ["npm", "run", "dev"]
     ports:
       - "3000:3000"
     environment:
@@ -48,6 +49,7 @@ services:
       context: ./apps/worker
       dockerfile: Dockerfile
     container_name: worker
+    command: ["npm", "run", "dev"]
     environment:
       - NODE_ENV=development
       - AWS_ENDPOINT=http://localstack:4566
