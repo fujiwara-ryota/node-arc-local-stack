@@ -7,6 +7,14 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["packages/shared/src/core/*"],
+      "@domain/*": ["packages/shared/src/domain/*"],
+      "@usecase/*": ["packages/shared/src/usecase/*"],
+      "@infra/*": ["packages/shared/src/infrastructure/*"],
+      "@presenter/*": ["packages/shared/src/presenter/*"]
+    }
   }
 }
